@@ -1,8 +1,18 @@
 import { db } from '../models/index.js';
 import { logger } from '../config/logger.js';
 
+const Grade = db.gradesModel;
+
 const create = async (req, res) => {
-  try {
+    const grade = new Grade({
+      name: req.body.name,
+      subject: req.body.subject,
+      type: req.body.type,
+      value: req.body.value,
+      lastModified: Date.now(),
+    });
+    try {
+      const data = await grade.save();
     res.send({ message: 'Grade inserido com sucesso' });
     logger.info(`POST /grade - ${JSON.stringify()}`);
   } catch (error) {
@@ -23,7 +33,9 @@ const findAll = async (req, res) => {
     : {};
 
   try {
+    const data = await grade.findAll(condition)
     logger.info(`GET /grade`);
+    res.send(data)
   } catch (error) {
     res
       .status(500)
