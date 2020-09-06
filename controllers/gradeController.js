@@ -33,21 +33,22 @@ const findAll = async (req, res) => {
     : {};
 
   try {
-    const data = await Grade.findAll(condition)
+    const data = await Grade.find({condition})
     logger.info(`GET /grade`);
     res.send(data)
   } catch (error) {
     res
-      .status(500)
-      .send({ message: error.message || 'Erro ao listar todos os documentos' });
+    .status(500)
+    .send({ message: error.message || 'Erro ao listar todos os documentos' });
     logger.error(`GET /grade - ${JSON.stringify(error.message)}`);
   }
 };
 
 const findOne = async (req, res) => {
   const id = req.params.id;
-
+  
   try {
+    const data = await Grade.findOne(id)
     logger.info(`GET /grade - ${id}`);
   } catch (error) {
     res.status(500).send({ message: 'Erro ao buscar o Grade id: ' + id });
