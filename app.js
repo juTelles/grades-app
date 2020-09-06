@@ -11,6 +11,7 @@ import { db } from './models/index.js';
       useUnifiedTopology: true,
     });
   } catch (error) {
+    console.log(error);
     process.exit();
   }
 })();

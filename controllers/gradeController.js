@@ -10,6 +10,7 @@ const create = async (req, res) => {
       .status(500)
       .send({ message: error.message || 'Algum erro ocorreu ao salvar' });
     logger.error(`POST /grade - ${JSON.stringify(error.message)}`);
+    console.log(error);
   }
 };
 
