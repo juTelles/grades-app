@@ -31,9 +31,9 @@ const findAll = async (req, res) => {
   var condition = name
     ? { name: { $regex: new RegExp(name), $options: 'i' } }
     : {};
-
+    console.log(condition);
   try {
-    const data = await Grade.find({condition})
+    const data = await Grade.find(condition)
     logger.info(`GET /grade`);
     res.send(data)
   } catch (error) {
@@ -48,8 +48,9 @@ const findOne = async (req, res) => {
   const id = req.params.id;
   
   try {
-    const data = await Grade.findOne(id)
+    const data = await Grade.findById({_id: id})
     logger.info(`GET /grade - ${id}`);
+    res.send(data)
   } catch (error) {
     res.status(500).send({ message: 'Erro ao buscar o Grade id: ' + id });
     logger.error(`GET /grade - ${JSON.stringify(error.message)}`);
@@ -62,11 +63,13 @@ const update = async (req, res) => {
       message: 'Dados para atualizacao vazio',
     });
   }
-
+  
   const id = req.params.id;
-
+  
   try {
+    const data = await Grade.findOneAndUpdate({_id: id}, req.body, {new: true})
     logger.info(`PUT /grade - ${id} - ${JSON.stringify(req.body)}`);
+    res.send(data)
   } catch (error) {
     res.status(500).send({ message: 'Erro ao atualizar a Grade id: ' + id });
     logger.error(`PUT /grade - ${JSON.stringify(error.message)}`);
