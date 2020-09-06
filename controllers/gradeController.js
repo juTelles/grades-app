@@ -78,9 +78,11 @@ const update = async (req, res) => {
 
 const remove = async (req, res) => {
   const id = req.params.id;
-
+  
   try {
+    const data = await Grade.findOneAndRemove({_id: id})
     logger.info(`DELETE /grade - ${id}`);
+    res.send("deleted")
   } catch (error) {
     res
       .status(500)
