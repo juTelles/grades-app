@@ -1,6 +1,5 @@
 import winston from 'winston';
 import winstondb from 'winston-mongodb';
-require('dotenv').config()
 
 const { combine, timestamp, label, printf } = winston.format;
 
