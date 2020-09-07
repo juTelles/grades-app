@@ -85,14 +85,16 @@ const remove = async (req, res) => {
     res.send("deleted")
   } catch (error) {
     res
-      .status(500)
-      .send({ message: 'Nao foi possivel deletar o Grade id: ' + id });
+    .status(500)
+    .send({ message: 'Nao foi possivel deletar o Grade id: ' + id });
     logger.error(`DELETE /grade - ${JSON.stringify(error.message)}`);
   }
 };
 
 const removeAll = async (req, res) => {
   try {
+    const data = await Grade.deleteMany({})
+    res.send("All is deleted")
     logger.info(`DELETE /grade`);
   } catch (error) {
     res.status(500).send({ message: 'Erro ao excluir todos as Grades' });
